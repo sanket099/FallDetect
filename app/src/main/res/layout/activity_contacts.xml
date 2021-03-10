@@ -1,9 +1,401 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ContactsActivity">
+    android:orientation="vertical"
+    tools:context=".ContactsActivity"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="match_parent"
+    android:layout_gravity="top">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+
+        android:fillViewport="true"
+
+
+        android:background="@color/colorPrimaryDark"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="Emergency Contacts"
+                android:textColor="@color/textColor"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="352dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="15dp"
+
+                android:background="@drawable/back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/con1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="17dp"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="First SafeWe Contact"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/name"
+                app:layout_constraintEnd_toEndOf="@+id/name"
+                app:layout_constraintStart_toStartOf="@+id/name" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginTop="197dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter name"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/phn"
+                app:layout_constraintStart_toStartOf="@+id/phn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="21dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter email"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/address" />
+
+            <EditText
+                android:id="@+id/phn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="12dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter phone number"
+                android:inputType="number"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/address"
+                app:layout_constraintStart_toStartOf="@+id/address"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter address"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/email"
+                app:layout_constraintStart_toStartOf="@+id/email"
+                app:layout_constraintTop_toBottomOf="@+id/phn" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="352dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30sp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/back"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+            <TextView
+                android:id="@+id/con2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="Second SafeWe Contact"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/name2"
+                app:layout_constraintTop_toTopOf="@id/imageView2" />
+
+            <EditText
+                android:id="@+id/name2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginTop="20dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter name"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+
+                app:layout_constraintEnd_toEndOf="@+id/phn2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/phn2"
+                app:layout_constraintTop_toBottomOf="@id/con2" />
+
+            <EditText
+                android:id="@+id/email2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="21dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter email"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/address2" />
+
+            <EditText
+                android:id="@+id/phn2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="264dp"
+                android:layout_marginEnd="36dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter phone number"
+                android:inputType="number"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address" />
+
+            <EditText
+                android:id="@+id/address2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter address"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/phn2"
+                app:layout_constraintStart_toStartOf="@+id/phn2"
+                app:layout_constraintTop_toBottomOf="@+id/phn2" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="0dp"
+                android:layout_height="352dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/back"
+
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/con3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="41dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="Third SafeWe Contact"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/name3"
+                app:layout_constraintTop_toTopOf="@id/imageView3" />
+
+            <EditText
+                android:id="@+id/name3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter name"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/con3" />
+
+            <EditText
+                android:id="@+id/email3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter email"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/address3" />
+
+            <EditText
+                android:id="@+id/phn3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="22dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter phone number"
+                android:inputType="number"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/address3"
+                app:layout_constraintStart_toStartOf="@+id/address3"
+                app:layout_constraintTop_toBottomOf="@+id/name3" />
+
+
+            <EditText
+                android:id="@+id/address3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/editbox"
+                android:fontFamily="@font/font"
+                android:hint="enter address"
+                android:padding="15dp"
+                android:textColor="#00131F"
+                android:textColorHint="#2E7B9E"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/phn3" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/save_ec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/lightbuttons"
+                android:clickable="true"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:padding="12sp"
+                android:text="Save"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/imageView3"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
+
+
+
+
