@@ -13,8 +13,8 @@ class ApplicationClass: Application() {
 
         //first thing which runs on app start
         createNotificationChannel()
-        val intent = Intent(this, MyIntentService::class.java)
-        MyIntentService.enqueueWork(this, intent)
+       /* val intent = Intent(this, MyBoundService::class.java)
+        MyBoundService.MyLocalBinder*/
     }
 
     //creating a channel

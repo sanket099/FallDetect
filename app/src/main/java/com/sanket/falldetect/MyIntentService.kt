@@ -1,3 +1,4 @@
+/*
 package com.sanket.falldetect
 
 import android.content.Context
@@ -80,4 +81,4 @@ class MyIntentService :  JobIntentService(),SensorEventListener{
 
     }
 
-}
+}*/

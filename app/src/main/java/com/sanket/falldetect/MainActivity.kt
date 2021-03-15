@@ -1,28 +1,28 @@
 package com.sanket.falldetect
 
 import android.Manifest
+import android.app.PendingIntent.getActivity
 import android.content.*
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.os.Parcelable
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
 class MainActivity : AppCompatActivity() {
 
     private val sharedPrefFile: String = "shared"
-    val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,Context.MODE_PRIVATE)
-
+    lateinit var sharedPreferences: SharedPreferences
 
     var myService: MyBoundService? = null
     var isBound = false
@@ -32,39 +32,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        sharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSION_REQUEST_ACCESS_FINE_LOCATION)
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSION_REQUEST_ACCESS_FINE_LOCATION)
             return
         }
-
 
        // val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,Context.MODE_PRIVATE)
 
         val button: SwitchCompat = findViewById(R.id.switch_btn)
-        button.setOnCheckedChangeListener { buttonView, isChecked ->
+        button.setOnCheckedChangeListener { _, isChecked ->
+
+            val intent = Intent(this, MyBoundService::class.java)
 
         if(isChecked){
-            val intent = Intent(this, MyBoundService::class.java)
+
             bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
+            startService(intent)
         }
             else{
-
+                stopService(intent)
         }
 
         }
 
         if(fallen == true){
             //sendSMS("number")
+                //println("fallen : $fallen")
             button.isChecked = true
 
         }
-
-
-
 
     }
 
@@ -75,15 +77,19 @@ class MainActivity : AppCompatActivity() {
             val binder = service as MyBoundService.MyLocalBinder
             myService = binder.getService()
             isBound = true
-            fallen = myService?.getFallen()
+            //fallen = myService?.getFallen()
+
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
             isBound = false
+            unregisterReceiver(mMessageReceiver)
         }
     }
 
-    fun sendSMS(number : String)
+
+
+    fun sendSMS(number: String)
     {
         val uri = Uri.parse(number)
         val intent = Intent(Intent.ACTION_SENDTO, uri)
@@ -102,12 +108,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onLocationChanged(location: Location) {
 
-                var latitude = location.latitude
-                var longitude = location.longitude
+                val latitude = location.latitude
+                val longitude = location.longitude
 
                 val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-                editor.putString("latitude",latitude.toString())
-                editor.putString("longitude",longitude.toString())
+                editor.putString("latitude", latitude.toString())
+                editor.putString("longitude", longitude.toString())
                 editor.apply()
                 editor.commit()
 
@@ -117,16 +123,15 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
         }
 
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSION_REQUEST_ACCESS_FINE_LOCATION)
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSION_REQUEST_ACCESS_FINE_LOCATION)
             return
         }
         locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
@@ -137,13 +142,52 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_REQUEST_ACCESS_FINE_LOCATION) {
             when (grantResults[0]) {
                 PackageManager.PERMISSION_GRANTED -> getLocation()
-                PackageManager.PERMISSION_DENIED -> Toast.makeText(this,"Please Grant Permission", Toast.LENGTH_SHORT).show()//Tell to user the need of grant permission
+                PackageManager.PERMISSION_DENIED -> Toast.makeText(this, "Please Grant Permission", Toast.LENGTH_SHORT).show()//Tell to user the need of grant permission
             }
         }
     }
 
     companion object {
         private const val PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 100
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(!sharedPreferences.getBoolean("ec_saved", false)){
+            val intent = Intent(this, ContactsActivity::class.java)
+            startActivity(intent)
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, getLocalIntentFilter())
+        //registerReceiver(mMessageReceiver, getLocalIntentFilter())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            unregisterReceiver(mMessageReceiver)
+        }
+        catch (e : IllegalArgumentException){
+            println("Error $e")
+        }
+    }
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            // Get extra data included in the Intent
+            fallen = intent.getBooleanExtra("Fall", false)
+
+            println("FALLLLL")
+
+             Toast.makeText(context, fallen.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getLocalIntentFilter(): IntentFilter {
+        val iFilter = IntentFilter()
+        iFilter.addAction("FALL")
+        return iFilter
     }
 
 

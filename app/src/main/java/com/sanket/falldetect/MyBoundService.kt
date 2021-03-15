@@ -1,5 +1,6 @@
 package com.sanket.falldetect
 
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.hardware.Sensor
@@ -11,6 +12,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import androidx.core.app.NotificationCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlin.math.sqrt
 
 class MyBoundService : Service(), SensorEventListener {
@@ -28,8 +30,8 @@ class MyBoundService : Service(), SensorEventListener {
 
         val powerManager = getSystemService(POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(
-            PowerManager.PARTIAL_WAKE_LOCK,  //wake lock: will keep cpu running on phone lock
-            "ExampleApp:Wakelock"
+                PowerManager.PARTIAL_WAKE_LOCK,  //wake lock: will keep cpu running on phone lock
+                "ExampleApp:Wakelock"
         )
         wakeLock!!.acquire(600000000) //will keep cpu on //wake lock drains battery if timeout not specified
         //Log.d(MyIntentService.TAG, "Wakelock acquired")
@@ -38,12 +40,20 @@ class MyBoundService : Service(), SensorEventListener {
 
             //persistence notification
 
+            val intent = Intent(this, MainActivity::class.java)
 
+// Creating a pending intent and wrapping our intent
+
+// Creating a pending intent and wrapping our intent
+            val pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             //persistence notification
             val notification = NotificationCompat.Builder(this, "ChannelId")
                 .setContentTitle("Example IntentService")
                 .setContentText("Running...")
+                    .setAutoCancel(true)
+
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
                 .build()
             startForeground(1, notification)
         }
@@ -51,7 +61,7 @@ class MyBoundService : Service(), SensorEventListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-
+        //println("hello")
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accel = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager!!.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI)
@@ -86,8 +96,16 @@ class MyBoundService : Service(), SensorEventListener {
         val d = sqrt((event!!.values[0] * event.values[0] +
                 event.values[1] * event.values[1] + event.values[2] *
                 event.values[2]).toDouble())
+       // println(d)
 
-        if (d < 1) println("FALL$d")
+        if (d < 1) {
+            println("FALL$d")
+            fall = true
+            val sendLevel = Intent("FALL")
+            sendLevel.putExtra("Fall", fall)
+            LocalBroadcastManager.getInstance(this).sendBroadcast(sendLevel)
+        }
+
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
