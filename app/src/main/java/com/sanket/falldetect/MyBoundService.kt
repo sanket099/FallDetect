@@ -23,7 +23,7 @@ class MyBoundService : Service(), SensorEventListener {
     private var wakeLock: PowerManager.WakeLock? = null
     private var sensorManager: SensorManager? = null
     var accel: Sensor? = null
-    var fall = false
+    //var fall = false
 
     override fun onCreate() {
         super.onCreate()
@@ -86,9 +86,9 @@ class MyBoundService : Service(), SensorEventListener {
         }
     }
 
-    fun getFallen(): Boolean {
+    /*fun getFallen(): Boolean {
         return fall
-    }
+    }*/
 
     override fun onSensorChanged(event: SensorEvent?) {
 
@@ -98,11 +98,11 @@ class MyBoundService : Service(), SensorEventListener {
                 event.values[2]).toDouble())
        // println(d)
 
-        if (d < 1) {
+        if (d < 0.5) {
             println("FALL$d")
-            fall = true
+            //fall = true
             val sendLevel = Intent("FALL")
-            sendLevel.putExtra("Fall", fall)
+            sendLevel.putExtra("Fall", true)
             LocalBroadcastManager.getInstance(this).sendBroadcast(sendLevel)
         }
 
