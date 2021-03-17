@@ -6,10 +6,9 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     tools:context=".ContactsActivity"
-
+    android:background="@color/background"
     android:layout_height="match_parent"
     android:layout_gravity="top">
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -18,19 +17,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="top"
 
-        android:fillViewport="true"
-
-
-        android:background="@color/colorPrimaryDark"
-
-        >
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            >
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/textView"
@@ -70,7 +61,7 @@
                 android:layout_marginBottom="17dp"
                 android:fontFamily="@font/font"
                 android:gravity="center"
-                android:text="First SafeWe Contact"
+                android:text="First Contact"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -89,8 +80,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter name"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/phn"
                 app:layout_constraintStart_toStartOf="@+id/phn"
@@ -109,8 +100,8 @@
                 android:hint="enter email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -127,8 +118,8 @@
                 android:hint="enter phone number"
                 android:inputType="number"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/address"
                 app:layout_constraintStart_toStartOf="@+id/address"
@@ -144,8 +135,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter address"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/email"
                 app:layout_constraintStart_toStartOf="@+id/email"
@@ -171,11 +162,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="92dp"
+                android:layout_marginTop="32dp"
                 android:fontFamily="@font/font"
                 android:gravity="center"
-                android:text="Second SafeWe Contact"
+                android:text="Second Contact"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
 
@@ -194,8 +185,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter name"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
 
                 app:layout_constraintEnd_toEndOf="@+id/phn2"
@@ -216,8 +207,8 @@
                 android:hint="enter email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="@+id/imageView2"
@@ -236,8 +227,8 @@
                 android:hint="enter phone number"
                 android:inputType="number"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -255,8 +246,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter address"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/phn2"
                 app:layout_constraintStart_toStartOf="@+id/phn2"
@@ -279,11 +270,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="41dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="116dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/font"
                 android:gravity="center"
-                android:text="Third SafeWe Contact"
+                android:text="Third Contact"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -303,8 +294,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter name"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -323,8 +314,8 @@
                 android:hint="enter email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -341,8 +332,8 @@
                 android:hint="enter phone number"
                 android:inputType="number"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/address3"
                 app:layout_constraintStart_toStartOf="@+id/address3"
@@ -361,8 +352,8 @@
                 android:fontFamily="@font/font"
                 android:hint="enter address"
                 android:padding="15dp"
-                android:textColor="#00131F"
-                android:textColorHint="#2E7B9E"
+                android:textColor="#1e212d"
+                android:textColorHint="#b68973"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -382,7 +373,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
 
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/background"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/imageView3"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"

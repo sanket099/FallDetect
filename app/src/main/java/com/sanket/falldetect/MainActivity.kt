@@ -3,12 +3,13 @@ package com.sanket.falldetect
 import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
+import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.Settings
 import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.util.*
 
 
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     var fallen : Boolean? = false
     lateinit var myViewModel: MyViewModel
     lateinit var myContactList : List<ContactClass>
+    var isRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,18 +149,78 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 */
-    private fun sendSMS(number : String) {
+    private fun sendSMS(number: String) {
         val smsManager = SmsManager.getDefault()
         val lat = sharedPreferences.getString("lattitude", null)
         val longi = sharedPreferences.getString("longitude", null)
 
-        val message = "http://maps.google.com/maps?saddr=$lat,$longi"
+        val message = "Fall Detected ! http://maps.google.com/maps?saddr=$lat,$longi"
 
         if (!number.isEmpty()) {
             smsManager.sendTextMessage(number, null, message, null, null)
             Toast.makeText(this@MainActivity, "sent sos sms to  $number", Toast.LENGTH_LONG).show()
         }
 
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = (this.getSystemService(LOCATION_SERVICE) as LocationManager)
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun zoomMyCuurentLocation() {
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        val criteria = Criteria()
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        if(!isLocationEnabled()){
+            Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+        }
+
+        else {
+            val location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false)!!)
+            if (location != null) {
+                val lat = location.latitude
+                val longi = location.longitude
+
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                editor.putString("latitude", lat.toString())
+                editor.putString("longitude", longi.toString())
+                editor.apply()
+                editor.commit()
+
+            } else {
+
+                setMyLastLocation()
+            }
+        }
+    }
+
+    private fun setMyLastLocation() {
+
+        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            if (location != null) {
+                val lat = location.latitude
+                val longi = location.longitude
+
+                val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+                editor.putString("latitude", lat.toString())
+                editor.putString("longitude", longi.toString())
+                editor.apply()
+                editor.commit()
+
+            }
+        }
     }
 
     private fun getLocation() {
@@ -201,7 +265,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_ACCESS_FINE_LOCATION) {
             when (grantResults[0]) {
-                PackageManager.PERMISSION_GRANTED -> getLocation()
+                PackageManager.PERMISSION_GRANTED -> zoomMyCuurentLocation()
                 PackageManager.PERMISSION_DENIED -> Toast.makeText(this, "Please Grant Permission", Toast.LENGTH_SHORT).show()//Tell to user the need of grant permission
             }
         }
@@ -220,17 +284,14 @@ class MainActivity : AppCompatActivity() {
         }
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, getLocalIntentFilter())
+        isRegistered = true
         //registerReceiver(mMessageReceiver, getLocalIntentFilter())
     }
 
     override fun onPause() {
         super.onPause()
-        try {
-            unregisterReceiver(mMessageReceiver)
-        }
-        catch (e: IllegalArgumentException){
-            println("Error $e")
-        }
+        if(isRegistered)
+        unregisterReceiver(mMessageReceiver)
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {

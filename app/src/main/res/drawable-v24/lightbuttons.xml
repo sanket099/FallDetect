@@ -5,13 +5,13 @@
     <!-- SHADOW -->
     <item>
         <shape>
-            <solid android:color="#A8DADC"/>
+            <solid android:color="#1e212d"/>
 
             <corners android:radius="30dp"/>
         </shape>
     </item>
 
-    <solid android:color="#A8DADC"/>
+    <solid android:color="#1e212d"/>
     <corners android:radius="8dp"/>
 
 

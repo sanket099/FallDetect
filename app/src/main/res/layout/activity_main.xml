@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
 
@@ -13,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="73dp"
+        android:fontFamily="@font/productsansregular"
+        android:textColor="@color/colorAccent"
         android:text="Detect My Falls"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@+id/switch_btn"
@@ -30,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_toggle"
-        app:showText="true"
+
         app:track="@drawable/custom_track" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
